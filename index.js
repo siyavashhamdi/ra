@@ -1,15 +1,14 @@
 const express = require('express');
-const app = express();
-const server = require('http').createServer(app);
+const { createServer } = require('http')
 const passport = require('passport');
-const util = require('util');
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
 const session = require('express-session');
-const GoogleStrategy = require('./google-oauth2').Strategy;;
+const GoogleStrategy = require('./google-oauth2').Strategy;
 
 const GOOGLE_CLIENT_ID = "871266714567-qihap3chrgelk9ikm8kctpn6jvm62ce3.apps.googleusercontent.com"
 const GOOGLE_CLIENT_SECRET = "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";
+
+const app = express();
+const server = createServer(app);
 
 passport.serializeUser(function (user, done) {
   done(null, user);
@@ -32,14 +31,13 @@ passport.use(new GoogleStrategy({
   }
 ));
 
-// configure Express
-app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
-app.use(express.static(__dirname + '/public'));
-app.use(cookieParser());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: true
+app.use(session({
+  secret: 'cookie_secret',
+  name: 'kaas',
+  proxy: true,
+  resave: true,
+  saveUninitialized: true
 }));
 app.use(passport.initialize());
 app.use(passport.session());

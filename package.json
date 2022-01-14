@@ -1,6 +1,6 @@
 {
-  "name": "passport-google-oauth2-example",
-  "version": "0.0.0",
+  "name": "ra-auth-backend",
+  "version": "1.0.0",
   "dependencies": {
     "body-parser": "^1.18.3",
     "connect-redis": "^3.4.0",
@@ -9,7 +9,7 @@
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "passport": "^0.4.0",
-    "passport-oauth2": "^1.1.2"
+    "passport-oauth2": "^1.6.1"
   },
   "scripts": {
     "start": "node index.js"
