@@ -51,18 +51,22 @@ app.get('/', function (req, res) {
   res.render('index', { user: req.user });
 });
 
-app.get('/account', ensureAuthenticated, function (req, res) {
-  res.render('account', { user: req.user });
-});
-
 app.get('/login', function (req, res) {
   res.render('login', { user: req.user });
 });
 
 app.get('/auth/google', passport.authenticate('google', {
-  scope: [
-    'email', 'profile']
+  scope: ['email', 'profile']
 }));
+
+app.get('/account', ensureAuthenticated, function (req, res) {
+  res.render('account', { user: req.user });
+});
+
+app.get('/logout', function (req, res) {
+  req.logout();
+  res.redirect('/');
+});
 
 app.get('/auth/google/callback',
   passport.authenticate('google', {
@@ -70,11 +74,6 @@ app.get('/auth/google/callback',
     failureRedirect: '/login'
   })
 );
-
-app.get('/logout', function (req, res) {
-  req.logout();
-  res.redirect('/');
-});
 
 server.listen(3000, () => {
   console.log("Example app listening at http://localhost:3000")
